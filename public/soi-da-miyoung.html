@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bản đồ Sáng Da MIYOUNG</title>
+<meta name="description" content="Soi da miễn phí trong 60 giây - nhận Bản đồ Sáng Da cá nhân và cẩm nang chăm sóc da 7 ngày từ MIYOUNG.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="assets/soi-da.css">
+</head>
+<body>
+<div class="app" id="app">
+
+  <!-- S0 - Trang mở đầu (mục 4.1) -->
+  <section id="screen-s0" class="screen active" aria-label="Trang mở đầu">
+    <div class="brand-line">
+      <span class="brand-dot" aria-hidden="true"></span>
+      <span class="brand-name">MIYOUNG COSMETIC &amp; LAB</span>
+    </div>
+
+    <div class="face-wrap">
+      <svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+        <defs>
+          <clipPath id="faceClip0">
+            <path d="M100 20 C150 20 172 62 170 112 C168 170 138 214 100 222 C62 214 32 170 30 112 C28 62 50 20 100 20Z"/>
+          </clipPath>
+          <linearGradient id="sweepGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="var(--gold)" stop-opacity="0"/>
+            <stop offset="50%" stop-color="var(--gold)" stop-opacity="0.85"/>
+            <stop offset="100%" stop-color="var(--gold)" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <path d="M100 20 C150 20 172 62 170 112 C168 170 138 214 100 222 C62 214 32 170 30 112 C28 62 50 20 100 20Z" fill="var(--wash)" stroke="var(--mint-deep)" stroke-width="2"/>
+        <g clip-path="url(#faceClip0)">
+          <rect class="face-sweep" x="0" y="90" width="200" height="60" fill="url(#sweepGrad)"></rect>
+        </g>
+        <path d="M70 108 q10 -6 20 0" stroke="var(--ink)" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M110 108 q10 -6 20 0" stroke="var(--ink)" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M100 118 q-7 22 0 32" stroke="var(--ink)" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M85 172 q15 8 30 0" stroke="var(--ink)" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <h1 class="title-page">Da bạn đang thiếu gì để sáng lên?</h1>
+    <p>Trả lời 4 câu hỏi, thêm một ảnh selfie nếu muốn. Bạn nhận Bản đồ Sáng Da gồm độ đều màu, vùng thâm sạm, độ ẩm và gợi ý chăm sóc phù hợp.</p>
+
+    <ul class="tick-list">
+      <li><span class="tick-icon">✓</span><span>Miễn phí, khoảng 60 giây, xem kết quả ngay không cần để lại thông tin.</span></li>
+      <li><span class="tick-icon">✓</span><span>Ảnh được phân tích ngay trên điện thoại của bạn, không tải lên máy chủ và bị xóa ngay sau khi phân tích.</span></li>
+      <li><span class="tick-icon">✓</span><span>Từ MIYOUNG, thương hiệu 11 năm trên thị trường làm đẹp.</span></li>
+    </ul>
+
+    <button type="button" class="btn btn-primary" id="btn-start">Bắt đầu soi da</button>
+  </section>
+
+  <!-- S1 - Bộ câu hỏi (mục 4.2) -->
+  <section id="screen-s1" class="screen" aria-label="Bộ câu hỏi">
+    <button type="button" class="back-link" id="btn-back-s1">← Quay lại</button>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill" role="meter" aria-label="Tiến trình trả lời câu hỏi" aria-valuemin="0" aria-valuemax="100" aria-valuenow="25" style="width:25%"></div></div>
+    <div class="progress-label" id="progress-label">Câu 1/4</div>
+    <div id="question-container"></div>
+  </section>
+
+  <!-- S2 - Ảnh selfie (mục 4.3) -->
+  <section id="screen-s2" class="screen" aria-label="Ảnh selfie">
+    <button type="button" class="back-link" id="btn-back-s2">← Quay lại</button>
+    <h2>Thêm ảnh selfie để kết quả sát hơn</h2>
+    <p>Chụp mặt mộc, nhìn thẳng, gần cửa sổ có ánh sáng tự nhiên.</p>
+
+    <div class="photo-picker">
+      <input type="file" id="photo-input" accept="image/*" capture="user" class="hidden">
+      <button type="button" class="btn btn-secondary" id="btn-pick-photo">Chụp hoặc chọn ảnh</button>
+    </div>
+
+    <div class="notice-box">
+      <span class="notice-icon" aria-hidden="true">🔒</span>
+      <span>Ảnh chỉ được đọc trong trình duyệt để đo độ đều màu. Ảnh không được gửi đi, không được lưu và không dùng để nhận dạng bạn. Trang xóa ảnh khỏi bộ nhớ ngay sau khi đo.</span>
+    </div>
+
+    <div class="photo-status" id="photo-status" role="status" aria-live="polite"></div>
+
+    <button type="button" class="btn btn-outline" id="btn-skip-photo">Bỏ qua, xem kết quả</button>
+  </section>
+
+  <!-- S3 - Kết quả (mục 6-9) -->
+  <section id="screen-s3" class="screen" aria-label="Kết quả">
+
+    <div class="card" id="result-card">
+      <div class="face-wrap">
+        <svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Hình minh họa vùng da: trán, hai má, cằm">
+          <path d="M100 20 C150 20 172 62 170 112 C168 170 138 214 100 222 C62 214 32 170 30 112 C28 62 50 20 100 20Z" fill="var(--wash)" stroke="var(--mint-deep)" stroke-width="2"/>
+          <ellipse id="region-forehead" cx="100" cy="70" rx="46" ry="20" fill="var(--mint)" fill-opacity="0.2"></ellipse>
+          <ellipse id="region-cheek-l" cx="62" cy="138" rx="20" ry="24" fill="var(--mint)" fill-opacity="0.2"></ellipse>
+          <ellipse id="region-cheek-r" cx="138" cy="138" rx="20" ry="24" fill="var(--mint)" fill-opacity="0.2"></ellipse>
+          <ellipse id="region-chin" cx="100" cy="196" rx="22" ry="11" fill="var(--mint)" fill-opacity="0.2"></ellipse>
+          <path d="M70 108 q10 -6 20 0" stroke="var(--ink)" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M110 108 q10 -6 20 0" stroke="var(--ink)" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M100 118 q-7 22 0 32" stroke="var(--ink)" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M85 172 q15 8 30 0" stroke="var(--ink)" stroke-width="3" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <div style="text-align:center;"><span class="result-code" id="result-code">MY-AAA</span></div>
+      <p class="priority-text" id="priority-text"></p>
+
+      <div class="meter-row">
+        <div class="meter-label-row"><span>Độ đều màu</span><span id="meter-even-label"></span></div>
+        <div class="meter-track"><div class="meter-fill" id="meter-even-fill" role="meter" aria-label="Độ đều màu"></div></div>
+      </div>
+      <div class="meter-row">
+        <div class="meter-label-row"><span>Độ sạch thâm sạm</span><span id="meter-spots-label"></span></div>
+        <div class="meter-track"><div class="meter-fill" id="meter-spots-fill" role="meter" aria-label="Độ sạch thâm sạm"></div></div>
+      </div>
+      <div class="meter-row">
+        <div class="meter-label-row"><span>Độ ẩm</span><span id="meter-moist-label"></span></div>
+        <div class="meter-track"><div class="meter-fill" id="meter-moist-fill" role="meter" aria-label="Độ ẩm"></div></div>
+      </div>
+
+      <p class="text-small text-muted" id="calc-note"></p>
+
+      <h3 class="title-section" style="font-size:18px;margin-top:20px;">Gợi ý chăm sóc</h3>
+      <ul class="care-list" id="care-list"></ul>
+
+      <p class="branch-line" id="branch-line"></p>
+      <p class="text-small" id="branch-product"></p>
+
+      <p class="disclaimer">Kết quả mang tính tham khảo cho việc chọn mỹ phẩm, không phải chẩn đoán y khoa và không thay thế tư vấn của bác sĩ da liễu.</p>
+    </div>
+
+    <!-- Hành trình 7 ngày (mục 7) -->
+    <div class="card" id="journey-card">
+      <h2 class="title-section" style="margin-top:0;">Hành trình 7 ngày của bạn</h2>
+      <span class="day-badge">ĐÃ MỞ NGÀY 1/7</span>
+      <p class="text-small text-muted" id="journey-branch-line"></p>
+
+      <div class="day-strip" id="day-strip"></div>
+
+      <span class="day-badge" id="day1-label">NGÀY 1 · BẮT ĐẦU NGAY HÔM NAY</span>
+      <h3 id="day1-title"></h3>
+      <p id="day1-explain"></p>
+      <ul class="checklist" id="day1-checklist"></ul>
+      <div class="day-complete-msg" id="day-complete-msg">Tuyệt vời, bạn đã xong ngày 1! Mở khóa ngày 2 để đi tiếp.</div>
+
+      <div class="tip-box">
+        <strong>MIYOUNG GỢI Ý</strong>
+        <span id="day1-suggestion"></span>
+      </div>
+      <p class="text-small text-muted" id="day1-tip"></p>
+
+      <div class="dashed-box">
+        <h4>Ngày 2 đến 7 và tư vấn 1:1</h4>
+        <ul class="locked-days" id="locked-days-list"></ul>
+      </div>
+
+      <button type="button" class="btn btn-primary" id="btn-unlock-scroll">Mở khóa ngày 2–7 miễn phí</button>
+    </div>
+
+    <!-- PDF (mục 8) -->
+    <div class="card">
+      <button type="button" class="btn btn-secondary" id="btn-save-pdf">Lưu Bản đồ Sáng Da + Ngày 1 (PDF)</button>
+      <p class="pdf-note">File được tạo ngay trên điện thoại của bạn và chỉ lưu trên máy bạn. MIYOUNG không nhận được file này.</p>
+    </div>
+
+    <!-- Phễu (mục 9) -->
+    <div class="funnel-block" id="funnel-block">
+      <h3 style="margin-top:0;">Mở khóa ngày 2–7 và tư vấn 1:1 miễn phí</h3>
+      <p class="text-small" style="color:var(--gold-ink);">Không bắt buộc. Kết quả phía trên là của bạn dù bạn chọn cách nào.</p>
+
+      <div id="funnel-choice">
+        <button type="button" class="btn btn-primary" id="btn-choice-call" style="margin-bottom:10px;">Để lại số, chuyên viên gọi tư vấn</button>
+        <button type="button" class="btn btn-secondary" id="btn-choice-messenger">Nhắn fanpage MIYOUNG</button>
+        <p class="text-small text-muted" style="margin-top:10px;margin-bottom:0;">Nhắn fanpage không cần điền thông tin trên trang này.</p>
+      </div>
+
+      <div id="funnel-messenger" class="hidden">
+        <div class="messenger-msg-box" id="messenger-msg-box"></div>
+        <button type="button" class="btn btn-secondary" id="btn-open-messenger" style="margin-bottom:10px;">Mở Messenger</button>
+        <p class="text-small text-muted">Cuộc trò chuyện diễn ra trên Facebook Messenger và đồng thời chịu điều khoản của nền tảng này.</p>
+        <button type="button" class="btn-text" id="btn-messenger-back">Chọn cách khác</button>
+      </div>
+
+      <form id="funnel-form" class="hidden" novalidate>
+        <div class="field" id="field-ten">
+          <label for="input-ten">Tên gọi (không bắt buộc)</label>
+          <input type="text" id="input-ten" maxlength="40" autocomplete="given-name">
+        </div>
+
+        <div class="field" id="field-phone">
+          <label for="input-phone">Số điện thoại</label>
+          <input type="tel" id="input-phone" inputmode="numeric" autocomplete="tel" placeholder="0912345678">
+          <div class="field-error">Nhập số điện thoại Việt Nam 10 số, ví dụ 0912345678.</div>
+        </div>
+
+        <div class="field" id="field-khung-gio">
+          <label>Khung giờ gọi</label>
+          <div class="timeslot-grid" id="timeslot-grid">
+            <button type="button" class="timeslot-btn" data-value="08-11">8h – 11h</button>
+            <button type="button" class="timeslot-btn" data-value="11-14">11h – 14h</button>
+            <button type="button" class="timeslot-btn" data-value="14-17">14h – 17h</button>
+            <button type="button" class="timeslot-btn" data-value="17-20">17h – 20h</button>
+          </div>
+          <div class="field-error">Chọn khung giờ bạn muốn được gọi.</div>
+        </div>
+
+        <div class="checkbox-field" id="field-dongy-tuvan">
+          <input type="checkbox" id="chk-dongy-tuvan">
+          <label for="chk-dongy-tuvan">Tôi đồng ý để MIYOUNG dùng tên gọi, số điện thoại, khung giờ và mã kết quả làn da để gọi tư vấn kết quả soi da trong khung giờ tôi chọn và gửi cẩm nang 7 ngày qua tin nhắn.</label>
+        </div>
+        <div class="field-error" id="error-dongy-tuvan" style="margin:-8px 0 14px;">Để gửi yêu cầu, cần tick: đồng ý gọi tư vấn và gửi cẩm nang.</div>
+
+        <div class="checkbox-field">
+          <input type="checkbox" id="chk-uu-dai">
+          <label for="chk-uu-dai">Tôi muốn nhận thông tin ưu đãi, khuyến mãi của MIYOUNG qua điện thoại hoặc tin nhắn.</label>
+        </div>
+
+        <div class="checkbox-field" id="field-du16">
+          <input type="checkbox" id="chk-du16">
+          <label for="chk-du16">Tôi xác nhận mình từ đủ 16 tuổi trở lên.</label>
+        </div>
+        <div class="field-error" id="error-du16" style="margin:-8px 0 14px;">… và xác nhận từ đủ 16 tuổi.</div>
+
+        <table class="summary-table">
+          <tr><th>Ai nhận</th><td>Công ty TNHH SX TM XNK Khải Minh Factory (thương hiệu MIYOUNG), MST 1102152606</td></tr>
+          <tr><th>Dữ liệu</th><td>Tên gọi, số điện thoại, khung giờ gọi, mã kết quả làn da (phản ánh tình trạng da bạn đã chọn). Không có ảnh.</td></tr>
+          <tr><th>Để làm gì</th><td>Chỉ cho những mục đích bạn tick bên dưới.</td></tr>
+          <tr><th>Lưu bao lâu</th><td>24 tháng kể từ lần tương tác gần nhất, hoặc xóa sớm hơn khi bạn yêu cầu</td></tr>
+          <tr><th>Quyền của bạn</th><td>Xem, sửa, yêu cầu xóa, rút lại đồng ý bất kỳ lúc nào.</td></tr>
+        </table>
+
+        <details class="notice-full">
+          <summary>Đọc toàn văn thông báo xử lý dữ liệu cá nhân</summary>
+          <div class="notice-full-body">
+            <p>Phiên bản: TB-DLCN-SOIDA v1.2 (24/09/2026). Căn cứ Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15 và các văn bản hướng dẫn.</p>
+            <h5>1. Bên kiểm soát và xử lý dữ liệu</h5>
+            <p>Công ty TNHH SX TM XNK Khải Minh Factory (thương hiệu MIYOUNG), MST 1102152606, địa chỉ K15, Khu B, Đường CN5, Khu xưởng Kizuna 3, Xã Cần Giuộc, Tỉnh Tây Ninh. Liên hệ: 090 398 88 08, Khaiminh.cosmetic@gmail.com.</p>
+            <h5>2. Dữ liệu được xử lý</h5>
+            <p>Tên gọi (nếu bạn nhập), số điện thoại và khung giờ bạn muốn được gọi. Mã kết quả làn da và nhóm tình trạng da suy ra từ câu trả lời của bạn. Bản ghi đồng ý: thời điểm, phiên bản thông báo, các mục đích bạn chọn. File PDF "Bản đồ Sáng Da" được tạo ngay trên thiết bị của bạn và chỉ lưu trên máy bạn; MIYOUNG không nhận được file này. Chúng tôi KHÔNG thu thập ảnh khuôn mặt. Ảnh (nếu có) chỉ được đo độ đều màu trong trình duyệt trên thiết bị của bạn, không truyền đi, không lưu và không dùng để nhận dạng bạn.</p>
+            <h5>3. Mục đích</h5>
+            <p>Mỗi mục đích cần đồng ý riêng: (1) Gọi điện tư vấn kết quả soi da trong khung giờ bạn chọn và gửi cẩm nang 7 ngày qua tin nhắn. (2) Gửi thông tin ưu đãi, khuyến mãi của MIYOUNG qua điện thoại hoặc tin nhắn (tùy chọn). Không đồng ý mục đích tùy chọn không ảnh hưởng tới việc bạn nhận kết quả, cẩm nang hay cuộc gọi tư vấn. Chúng tôi không mua, bán hay chuyển giao dữ liệu của bạn cho bên thứ ba vì mục đích quảng cáo.</p>
+            <h5>4. Liên hệ và tần suất</h5>
+            <p>Chuyên viên chỉ gọi trong khung giờ bạn chọn. Thông tin ưu đãi (nếu bạn đồng ý) được gửi theo khung giờ và tần suất pháp luật cho phép. Bạn có thể từ chối nhận ưu đãi bất kỳ lúc nào.</p>
+            <h5>5. Thời gian lưu trữ</h5>
+            <p>24 tháng kể từ lần tương tác gần nhất, hoặc xóa sớm hơn khi bạn yêu cầu. Hết thời hạn, dữ liệu được xóa hoặc hủy.</p>
+            <h5>6. Quyền của bạn</h5>
+            <p>Được biết về hoạt động xử lý dữ liệu của bạn; đồng ý, không đồng ý, rút lại đồng ý; xem, chỉnh sửa, yêu cầu cung cấp, xóa, hạn chế xử lý, phản đối xử lý dữ liệu; khiếu nại, tố cáo, khởi kiện, yêu cầu bồi thường theo quy định pháp luật. Gửi yêu cầu qua Khaiminh.cosmetic@gmail.com hoặc gọi 090 398 88 08. Yêu cầu được xử lý trong thời hạn pháp luật quy định. Rút lại đồng ý không ảnh hưởng tới hoạt động xử lý đã thực hiện trước đó.</p>
+            <h5>7. Đối tượng</h5>
+            <p>Dịch vụ dành cho người từ đủ 16 tuổi. Người dưới 16 tuổi vẫn xem được kết quả nhưng không để lại thông tin liên hệ.</p>
+          </div>
+        </details>
+
+        <p class="text-small text-muted">Không tick là không đồng ý. Bạn có thể bỏ qua bước này và vẫn giữ nguyên kết quả.</p>
+        <button type="submit" class="btn btn-primary" id="btn-submit-form">Gửi yêu cầu gọi tư vấn</button>
+        <p class="text-small text-muted" id="form-network-error" style="color:#B0432D;display:none;margin-top:10px;"></p>
+        <button type="button" class="btn-text" id="btn-form-back">Chọn cách khác</button>
+      </form>
+
+      <div id="funnel-confirm" class="hidden">
+        <p style="font-weight:700;">Đã gửi yêu cầu gọi tư vấn</p>
+        <p id="confirm-text"></p>
+        <p style="font-weight:600;margin-top:16px;">Bản ghi đồng ý của bạn</p>
+        <div class="consent-record" id="consent-record"></div>
+        <p class="text-small text-muted">Lưu lại để đối chiếu khi cần. Bạn có thể rút lại đồng ý bất kỳ lúc nào qua liên hệ ở cuối trang.</p>
+      </div>
+    </div>
+
+    <button type="button" class="btn btn-outline" id="btn-restart">Soi lại từ đầu</button>
+
+    <footer class="site-footer">
+      Công ty TNHH SX TM XNK Khải Minh Factory (thương hiệu MIYOUNG). MST 1102152606.<br>
+      K15, Khu B, Đường CN5, Khu xưởng Kizuna 3, Xã Cần Giuộc, Tỉnh Tây Ninh. Điện thoại 090 398 88 08.<br>
+      <a href="#" id="link-withdraw-consent">Rút lại đồng ý hoặc yêu cầu xóa dữ liệu</a>
+    </footer>
+  </section>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="assets/soi-da.js"></script>
+</body>
+</html>

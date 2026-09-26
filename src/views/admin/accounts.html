@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tài khoản - MIYOUNG</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="/admin-assets/admin.css">
+</head>
+<body>
+<div id="topbar-mount"></div>
+<div class="wrap">
+  <h1>Tài khoản</h1>
+
+  <div class="card">
+    <h2 style="margin-top:0;">Tạo tài khoản mới</h2>
+    <form id="create-form">
+      <div class="filters">
+        <div><label for="new-email">Email</label><input type="email" id="new-email" required></div>
+        <div><label for="new-ten">Tên</label><input type="text" id="new-ten"></div>
+        <div><label for="new-role">Vai trò</label>
+          <select id="new-role"><option value="chuyen_vien">Chuyên viên</option><option value="quan_tri_vien">Quản trị viên</option></select>
+        </div>
+        <div><label for="new-password">Mật khẩu (tối thiểu 8 ký tự)</label><input type="password" id="new-password" required></div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-sm">Tạo tài khoản</button>
+      <div class="error-text" id="create-error"></div>
+    </form>
+  </div>
+
+  <div class="card table-scroll">
+    <h2 style="margin-top:0;">Danh sách tài khoản</h2>
+    <table>
+      <thead><tr><th>Email</th><th>Tên</th><th>Vai trò</th><th>Trạng thái</th><th>Hành động</th></tr></thead>
+      <tbody id="users-tbody"></tbody>
+    </table>
+  </div>
+</div>
+<script src="/admin-assets/common.js"></script>
+<script src="/admin-assets/accounts.js"></script>
+</body>
+</html>

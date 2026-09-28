@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Bản đồ Sáng Da MIYOUNG</title>
 <meta name="description" content="Soi da miễn phí trong 60 giây - nhận Bản đồ Sáng Da cá nhân và cẩm nang chăm sóc da 7 ngày từ MIYOUNG.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none';">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="assets/soi-da.css">
 </head>
@@ -161,114 +162,21 @@
       <p class="pdf-note">File được tạo ngay trên điện thoại của bạn và chỉ lưu trên máy bạn. MIYOUNG không nhận được file này.</p>
     </div>
 
-    <!-- Phễu (mục 9) -->
+    <!-- Mời nhắn Messenger để mở khóa ngày 2-7 (mục 9.1) - app tặng trải nghiệm, không thu thập thông tin khách -->
     <div class="funnel-block" id="funnel-block">
       <h3 style="margin-top:0;">Mở khóa ngày 2–7 và tư vấn 1:1 miễn phí</h3>
-      <p class="text-small" style="color:var(--gold-ink);">Không bắt buộc. Kết quả phía trên là của bạn dù bạn chọn cách nào.</p>
+      <p class="text-small" style="color:var(--gold-ink);">Không bắt buộc. Kết quả phía trên là của bạn.</p>
 
-      <div id="funnel-choice">
-        <button type="button" class="btn btn-primary" id="btn-choice-call" style="margin-bottom:10px;">Để lại số, chuyên viên gọi tư vấn</button>
-        <button type="button" class="btn btn-secondary" id="btn-choice-messenger">Nhắn fanpage MIYOUNG</button>
-        <p class="text-small text-muted" style="margin-top:10px;margin-bottom:0;">Nhắn fanpage không cần điền thông tin trên trang này.</p>
-      </div>
-
-      <div id="funnel-messenger" class="hidden">
-        <div class="messenger-msg-box" id="messenger-msg-box"></div>
-        <button type="button" class="btn btn-secondary" id="btn-open-messenger" style="margin-bottom:10px;">Mở Messenger</button>
-        <p class="text-small text-muted">Cuộc trò chuyện diễn ra trên Facebook Messenger và đồng thời chịu điều khoản của nền tảng này.</p>
-        <button type="button" class="btn-text" id="btn-messenger-back">Chọn cách khác</button>
-      </div>
-
-      <form id="funnel-form" class="hidden" novalidate>
-        <div class="field" id="field-ten">
-          <label for="input-ten">Tên gọi (không bắt buộc)</label>
-          <input type="text" id="input-ten" maxlength="40" autocomplete="given-name">
-        </div>
-
-        <div class="field" id="field-phone">
-          <label for="input-phone">Số điện thoại</label>
-          <input type="tel" id="input-phone" inputmode="numeric" autocomplete="tel" placeholder="0912345678">
-          <div class="field-error">Nhập số điện thoại Việt Nam 10 số, ví dụ 0912345678.</div>
-        </div>
-
-        <div class="field" id="field-khung-gio">
-          <label>Khung giờ gọi</label>
-          <div class="timeslot-grid" id="timeslot-grid">
-            <button type="button" class="timeslot-btn" data-value="08-11">8h – 11h</button>
-            <button type="button" class="timeslot-btn" data-value="11-14">11h – 14h</button>
-            <button type="button" class="timeslot-btn" data-value="14-17">14h – 17h</button>
-            <button type="button" class="timeslot-btn" data-value="17-20">17h – 20h</button>
-          </div>
-          <div class="field-error">Chọn khung giờ bạn muốn được gọi.</div>
-        </div>
-
-        <div class="checkbox-field" id="field-dongy-tuvan">
-          <input type="checkbox" id="chk-dongy-tuvan">
-          <label for="chk-dongy-tuvan">Tôi đồng ý để MIYOUNG dùng tên gọi, số điện thoại, khung giờ và mã kết quả làn da để gọi tư vấn kết quả soi da trong khung giờ tôi chọn và gửi cẩm nang 7 ngày qua tin nhắn.</label>
-        </div>
-        <div class="field-error" id="error-dongy-tuvan" style="margin:-8px 0 14px;">Để gửi yêu cầu, cần tick: đồng ý gọi tư vấn và gửi cẩm nang.</div>
-
-        <div class="checkbox-field">
-          <input type="checkbox" id="chk-uu-dai">
-          <label for="chk-uu-dai">Tôi muốn nhận thông tin ưu đãi, khuyến mãi của MIYOUNG qua điện thoại hoặc tin nhắn.</label>
-        </div>
-
-        <div class="checkbox-field" id="field-du16">
-          <input type="checkbox" id="chk-du16">
-          <label for="chk-du16">Tôi xác nhận mình từ đủ 16 tuổi trở lên.</label>
-        </div>
-        <div class="field-error" id="error-du16" style="margin:-8px 0 14px;">… và xác nhận từ đủ 16 tuổi.</div>
-
-        <table class="summary-table">
-          <tr><th>Ai nhận</th><td>Công ty TNHH SX TM XNK Khải Minh Factory (thương hiệu MIYOUNG), MST 1102152606</td></tr>
-          <tr><th>Dữ liệu</th><td>Tên gọi, số điện thoại, khung giờ gọi, mã kết quả làn da (phản ánh tình trạng da bạn đã chọn). Không có ảnh.</td></tr>
-          <tr><th>Để làm gì</th><td>Chỉ cho những mục đích bạn tick bên dưới.</td></tr>
-          <tr><th>Lưu bao lâu</th><td>24 tháng kể từ lần tương tác gần nhất, hoặc xóa sớm hơn khi bạn yêu cầu</td></tr>
-          <tr><th>Quyền của bạn</th><td>Xem, sửa, yêu cầu xóa, rút lại đồng ý bất kỳ lúc nào.</td></tr>
-        </table>
-
-        <details class="notice-full">
-          <summary>Đọc toàn văn thông báo xử lý dữ liệu cá nhân</summary>
-          <div class="notice-full-body">
-            <p>Phiên bản: TB-DLCN-SOIDA v1.2 (24/09/2026). Căn cứ Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15 và các văn bản hướng dẫn.</p>
-            <h5>1. Bên kiểm soát và xử lý dữ liệu</h5>
-            <p>Công ty TNHH SX TM XNK Khải Minh Factory (thương hiệu MIYOUNG), MST 1102152606, địa chỉ K15, Khu B, Đường CN5, Khu xưởng Kizuna 3, Xã Cần Giuộc, Tỉnh Tây Ninh. Liên hệ: 090 398 88 08, Khaiminh.cosmetic@gmail.com.</p>
-            <h5>2. Dữ liệu được xử lý</h5>
-            <p>Tên gọi (nếu bạn nhập), số điện thoại và khung giờ bạn muốn được gọi. Mã kết quả làn da và nhóm tình trạng da suy ra từ câu trả lời của bạn. Bản ghi đồng ý: thời điểm, phiên bản thông báo, các mục đích bạn chọn. File PDF "Bản đồ Sáng Da" được tạo ngay trên thiết bị của bạn và chỉ lưu trên máy bạn; MIYOUNG không nhận được file này. Chúng tôi KHÔNG thu thập ảnh khuôn mặt. Ảnh (nếu có) chỉ được đo độ đều màu trong trình duyệt trên thiết bị của bạn, không truyền đi, không lưu và không dùng để nhận dạng bạn.</p>
-            <h5>3. Mục đích</h5>
-            <p>Mỗi mục đích cần đồng ý riêng: (1) Gọi điện tư vấn kết quả soi da trong khung giờ bạn chọn và gửi cẩm nang 7 ngày qua tin nhắn. (2) Gửi thông tin ưu đãi, khuyến mãi của MIYOUNG qua điện thoại hoặc tin nhắn (tùy chọn). Không đồng ý mục đích tùy chọn không ảnh hưởng tới việc bạn nhận kết quả, cẩm nang hay cuộc gọi tư vấn. Chúng tôi không mua, bán hay chuyển giao dữ liệu của bạn cho bên thứ ba vì mục đích quảng cáo.</p>
-            <h5>4. Liên hệ và tần suất</h5>
-            <p>Chuyên viên chỉ gọi trong khung giờ bạn chọn. Thông tin ưu đãi (nếu bạn đồng ý) được gửi theo khung giờ và tần suất pháp luật cho phép. Bạn có thể từ chối nhận ưu đãi bất kỳ lúc nào.</p>
-            <h5>5. Thời gian lưu trữ</h5>
-            <p>24 tháng kể từ lần tương tác gần nhất, hoặc xóa sớm hơn khi bạn yêu cầu. Hết thời hạn, dữ liệu được xóa hoặc hủy.</p>
-            <h5>6. Quyền của bạn</h5>
-            <p>Được biết về hoạt động xử lý dữ liệu của bạn; đồng ý, không đồng ý, rút lại đồng ý; xem, chỉnh sửa, yêu cầu cung cấp, xóa, hạn chế xử lý, phản đối xử lý dữ liệu; khiếu nại, tố cáo, khởi kiện, yêu cầu bồi thường theo quy định pháp luật. Gửi yêu cầu qua Khaiminh.cosmetic@gmail.com hoặc gọi 090 398 88 08. Yêu cầu được xử lý trong thời hạn pháp luật quy định. Rút lại đồng ý không ảnh hưởng tới hoạt động xử lý đã thực hiện trước đó.</p>
-            <h5>7. Đối tượng</h5>
-            <p>Dịch vụ dành cho người từ đủ 16 tuổi. Người dưới 16 tuổi vẫn xem được kết quả nhưng không để lại thông tin liên hệ.</p>
-          </div>
-        </details>
-
-        <p class="text-small text-muted">Không tick là không đồng ý. Bạn có thể bỏ qua bước này và vẫn giữ nguyên kết quả.</p>
-        <button type="submit" class="btn btn-primary" id="btn-submit-form">Gửi yêu cầu gọi tư vấn</button>
-        <p class="text-small text-muted" id="form-network-error" style="color:#B0432D;display:none;margin-top:10px;"></p>
-        <button type="button" class="btn-text" id="btn-form-back">Chọn cách khác</button>
-      </form>
-
-      <div id="funnel-confirm" class="hidden">
-        <p style="font-weight:700;">Đã gửi yêu cầu gọi tư vấn</p>
-        <p id="confirm-text"></p>
-        <p style="font-weight:600;margin-top:16px;">Bản ghi đồng ý của bạn</p>
-        <div class="consent-record" id="consent-record"></div>
-        <p class="text-small text-muted">Lưu lại để đối chiếu khi cần. Bạn có thể rút lại đồng ý bất kỳ lúc nào qua liên hệ ở cuối trang.</p>
-      </div>
+      <div class="messenger-msg-box" id="messenger-msg-box"></div>
+      <button type="button" class="btn btn-primary" id="btn-open-messenger">Nhắn fanpage MIYOUNG</button>
+      <p class="text-small text-muted" style="margin-top:10px;">Tin nhắn mẫu ở trên được sao chép sẵn khi bạn bấm nút. Cuộc trò chuyện diễn ra trên Facebook Messenger và chịu điều khoản của nền tảng này.</p>
     </div>
 
     <button type="button" class="btn btn-outline" id="btn-restart">Soi lại từ đầu</button>
 
     <footer class="site-footer">
-      Công ty TNHH SX TM XNK Khải Minh Factory (thương hiệu MIYOUNG). MST 1102152606.<br>
-      K15, Khu B, Đường CN5, Khu xưởng Kizuna 3, Xã Cần Giuộc, Tỉnh Tây Ninh. Điện thoại 090 398 88 08.<br>
-      <a href="#" id="link-withdraw-consent">Rút lại đồng ý hoặc yêu cầu xóa dữ liệu</a>
+      MIYOUNG COSMETIC &amp; LAB · facebook.com/miyoungvn · Hotline 090 398 88 08<br>
+      Công ty TNHH SX TM XNK Khải Minh Factory. MST 1102152606.
     </footer>
   </section>
 

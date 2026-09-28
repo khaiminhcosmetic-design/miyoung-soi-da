@@ -1,12 +1,5 @@
-node_modules/
-.env
-data/*.db
-data/*.db-journal
-data/*.db-wal
-data/*.db-shm
-data/backups/
-cam_nang/*.pdf
-npm-debug.log
+.DS_Store
+Thumbs.db
 
-# Tài liệu đặc tả gốc + ảnh mockup tham khảo (nội bộ, không phải mã nguồn phần mềm)
+# Tài liệu đặc tả gốc + ảnh mockup tham khảo (nội bộ, không phải mã nguồn trang web)
 tai-lieu-goc/

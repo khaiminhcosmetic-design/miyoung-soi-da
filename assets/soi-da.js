@@ -1,19 +1,9 @@
 (function () {
   'use strict';
 
-  // Mục 13.1 - Khối cấu hình trang soi da
+  // Khối cấu hình trang soi da - app tặng trải nghiệm, không có máy chủ, không thu thập dữ liệu khách
   const CONFIG = {
     MESSENGER_URL: 'https://m.me/miyoungvn',
-    WEBHOOK_URL: '/api/leads', // để trống = chế độ demo, không gửi dữ liệu
-    NOTICE_VERSION: 'TB-DLCN-SOIDA v1.2 (24/09/2026)',
-    RETENTION: '24 tháng kể từ lần tương tác gần nhất, hoặc xóa sớm hơn khi bạn yêu cầu',
-    CONTROLLER: {
-      name: 'Công ty TNHH SX TM XNK Khải Minh Factory (thương hiệu MIYOUNG)',
-      tax: '1102152606',
-      address: 'K15, Khu B, Đường CN5, Khu xưởng Kizuna 3, Xã Cần Giuộc, Tỉnh Tây Ninh',
-      phone: '090 398 88 08',
-      email: 'Khaiminh.cosmetic@gmail.com',
-    },
   };
 
   // Mục 4.2 - Bộ câu hỏi
@@ -57,8 +47,6 @@
       ],
     },
   ];
-
-  const TIMESLOT_LABELS = { '08-11': '8h – 11h', '11-14': '11h – 14h', '14-17': '14h – 17h', '17-20': '17h – 20h' };
 
   // Mục 5.3 - Mức và bảng nhãn
   const LEVEL_LABELS = {
@@ -135,7 +123,6 @@
     photo: null, // { even, spots } hoặc null - KHÔNG BAO GIỜ chứa ảnh
     result: null, // { even, spots, moist, eL, sL, mL, maKetQua, branch }
     checklistDone: [],
-    isSubmitting: false,
   };
 
   function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
@@ -382,6 +369,7 @@
     state.checklistDone = [];
     renderResult(r);
     renderJourney(r);
+    updateMessengerBox();
     showScreen('screen-s3');
   }
 
@@ -480,157 +468,21 @@
     $('funnel-block').scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
   });
 
-  // ================= Mục 9 - Phễu thu thông tin =================
-  function resetFunnel() {
-    $('funnel-choice').classList.remove('hidden');
-    $('funnel-messenger').classList.add('hidden');
-    $('funnel-form').classList.add('hidden');
-    $('funnel-confirm').classList.add('hidden');
-    $('funnel-form').reset();
-    document.querySelectorAll('.timeslot-btn').forEach((b) => b.classList.remove('selected'));
-    document.querySelectorAll('#funnel-form .field').forEach((f) => f.classList.remove('invalid'));
-    $('form-network-error').style.display = 'none';
-  }
-
-  $('btn-choice-messenger').addEventListener('click', () => {
+  // ================= Mục 9.1 - Mời nhắn Messenger (app tặng trải nghiệm, không thu thập thông tin khách) =================
+  function updateMessengerBox() {
     const r = state.result;
     const msg = `Chào MIYOUNG, mình vừa soi da. Mã kết quả: ${r.maKetQua} (Nhánh ${r.branch})\nMình muốn mở khóa cẩm nang ngày 2–7 và được tư vấn.`;
     $('messenger-msg-box').textContent = msg;
+    return msg;
+  }
+
+  $('btn-open-messenger').addEventListener('click', () => {
+    const msg = updateMessengerBox();
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(msg).catch(() => {});
     }
-    $('funnel-choice').classList.add('hidden');
-    $('funnel-messenger').classList.remove('hidden');
-  });
-
-  $('btn-open-messenger').addEventListener('click', () => {
     window.open(CONFIG.MESSENGER_URL, '_blank', 'noopener');
   });
-
-  $('btn-messenger-back').addEventListener('click', resetFunnel);
-  $('btn-form-back').addEventListener('click', resetFunnel);
-
-  $('btn-choice-call').addEventListener('click', () => {
-    $('funnel-choice').classList.add('hidden');
-    $('funnel-form').classList.remove('hidden');
-  });
-
-  document.querySelectorAll('.timeslot-btn').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.timeslot-btn').forEach((b) => b.classList.remove('selected'));
-      btn.classList.add('selected');
-      $('field-khung-gio').classList.remove('invalid');
-    });
-  });
-
-  function normalizePhoneClient(input) {
-    const stripped = String(input || '').replace(/[\s.\-]/g, '');
-    const m = /^(0|\+84)(3|5|7|8|9)\d{8}$/.exec(stripped);
-    if (!m) return null;
-    return '0' + stripped.slice(m[1].length);
-  }
-
-  $('funnel-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    if (state.isSubmitting) return;
-
-    let valid = true;
-    const selectedSlotBtn = document.querySelector('.timeslot-btn.selected');
-    const phone = normalizePhoneClient($('input-phone').value);
-    const dongYTuVan = $('chk-dongy-tuvan').checked;
-    const du16 = $('chk-du16').checked;
-
-    document.querySelectorAll('#funnel-form .field').forEach((f) => f.classList.remove('invalid'));
-    $('error-dongy-tuvan').style.display = 'none';
-    $('error-du16').style.display = 'none';
-
-    if (!phone) { $('field-phone').classList.add('invalid'); valid = false; }
-    if (!selectedSlotBtn) { $('field-khung-gio').classList.add('invalid'); valid = false; }
-    if (!dongYTuVan) { $('error-dongy-tuvan').style.display = 'block'; valid = false; }
-    if (!du16) { $('error-du16').style.display = 'block'; valid = false; }
-
-    if (!valid) return;
-
-    const khungGio = selectedSlotBtn.dataset.value;
-    const r = state.result;
-    const nhanUuDai = $('chk-uu-dai').checked;
-    const tenGoi = $('input-ten').value.trim().slice(0, 40) || null;
-    const thoiDiem = new Date().toISOString();
-
-    const payload = {
-      ten_goi: tenGoi,
-      so_dien_thoai: phone,
-      khung_gio_goi: khungGio,
-      ma_ket_qua: r.maKetQua,
-      nhanh_cam_nang: r.branch,
-      dong_y: {
-        thoi_diem: thoiDiem,
-        phien_ban_thong_bao: CONFIG.NOTICE_VERSION,
-        muc_dich: { goi_tu_van_va_gui_cam_nang: true, nhan_uu_dai: nhanUuDai },
-        khung_gio_da_thoa_thuan: TIMESLOT_LABELS[khungGio],
-        xac_nhan_du_16_tuoi: true,
-        kenh: 'landing Soi Da MIYOUNG',
-      },
-    };
-
-    state.isSubmitting = true;
-    const submitBtn = $('btn-submit-form');
-    submitBtn.disabled = true;
-    $('form-network-error').style.display = 'none';
-
-    if (!CONFIG.WEBHOOK_URL) {
-      // Chế độ demo - không gửi dữ liệu đi đâu
-      showConfirm(payload);
-      state.isSubmitting = false;
-      submitBtn.disabled = false;
-      return;
-    }
-
-    try {
-      const res = await fetch(CONFIG.WEBHOOK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}));
-        $('form-network-error').textContent = body.error || 'Chưa gửi được yêu cầu. Kiểm tra kết nối và thử lại.';
-        $('form-network-error').style.display = 'block';
-        state.isSubmitting = false;
-        submitBtn.disabled = false;
-        return;
-      }
-      showConfirm(payload);
-    } catch (err) {
-      $('form-network-error').textContent = 'Chưa gửi được yêu cầu. Kiểm tra kết nối và thử lại.';
-      $('form-network-error').style.display = 'block';
-    }
-    state.isSubmitting = false;
-    submitBtn.disabled = false;
-  });
-
-  // Mục 9.5 - Màn hình xác nhận
-  function showConfirm(payload) {
-    $('funnel-form').classList.add('hidden');
-    $('funnel-confirm').classList.remove('hidden');
-
-    $('confirm-text').textContent = `Chuyên viên MIYOUNG sẽ gọi bạn trong khung ${payload.dong_y.khung_gio_da_thoa_thuan} và gửi cẩm nang 7 ngày Nhánh ${payload.nhanh_cam_nang} qua tin nhắn.`;
-
-    const formattedTime = new Intl.DateTimeFormat('vi-VN', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(payload.dong_y.thoi_diem));
-    const record = $('consent-record');
-    record.innerHTML = '';
-    const rows = [
-      ['Thời điểm', formattedTime],
-      ['Phiên bản thông báo', payload.dong_y.phien_ban_thong_bao],
-      ['Gọi tư vấn và gửi cẩm nang', payload.dong_y.muc_dich.goi_tu_van_va_gui_cam_nang ? 'Đồng ý' : 'Không đồng ý'],
-      ['Nhận thông tin ưu đãi', payload.dong_y.muc_dich.nhan_uu_dai ? 'Đồng ý' : 'Không đồng ý'],
-    ];
-    rows.forEach(([label, value]) => {
-      const div = document.createElement('div');
-      div.textContent = `${label}: ${value}`;
-      record.appendChild(div);
-    });
-  }
 
   // ================= Mục 8 - File PDF cá nhân =================
   async function ensureFontsLoaded() {
@@ -971,24 +823,9 @@
     state.result = null;
     state.checklistDone = [];
     $('photo-status').textContent = '';
-    resetFunnel();
     setPdfMessage('File được tạo ngay trên điện thoại của bạn và chỉ lưu trên máy bạn. MIYOUNG không nhận được file này.', false);
     renderQuestion();
     showScreen('screen-s0');
-  });
-
-  // Mục 10.4 - Rút lại đồng ý / yêu cầu xóa dữ liệu
-  $('link-withdraw-consent').addEventListener('click', (e) => {
-    e.preventDefault();
-    const r = state.result;
-    const subject = encodeURIComponent('Yêu cầu về dữ liệu cá nhân - Soi Da MIYOUNG');
-    const bodyLines = [
-      'Loại yêu cầu: (ví dụ: rút lại đồng ý / yêu cầu xóa dữ liệu)',
-      'Số điện thoại đã đăng ký: ',
-      `Mã kết quả: ${r ? r.maKetQua : ''}`,
-    ];
-    const body = encodeURIComponent(bodyLines.join('\n'));
-    window.location.href = `mailto:${CONFIG.CONTROLLER.email}?subject=${subject}&body=${body}`;
   });
 
   renderQuestion();
